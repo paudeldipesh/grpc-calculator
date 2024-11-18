@@ -3,3 +3,5 @@ Command:
 2) grpcurl -plaintext '[::1]:50051' list
 3) grpcui -plaintext '[::1]:50051'
 4) grpcurl -emit-defaults -plaintext '[::1]:50051' calculator.Admin.GetRequestCount
+5) grpcurl -H "Authorization: Bearer token.dipesh.paudel" -emit-defaults -plaintext '[::1]:50051' calculator.Admin.GetRequestCount
+6) grpcurl -plaintext -d '{"a": 2, "b": 0}' '[::1]:50051' calculator.Calculator.Divide

@@ -1,6 +1,8 @@
 use proto::admin_server::{Admin, AdminServer};
 use proto::calculator_server::{Calculator, CalculatorServer};
+use tonic::metadata::MetadataValue;
 use tonic::transport::Server;
+use tonic::{Request, Status};
 
 mod proto {
     tonic::include_proto!("calculator");
@@ -80,6 +82,15 @@ impl Admin for AdminService {
     }
 }
 
+fn check_auth(req: Request<()>) -> Result<Request<()>, Status> {
+    let token: MetadataValue<_> = "Bearer token.dipesh.paudel".parse().unwrap();
+
+    match req.metadata().get("authorization") {
+        Some(auth_token) if token == auth_token => Ok(req),
+        _ => Err(Status::unauthenticated("no valid auth token")),
+    }
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let address = "[::1]:50051".parse()?;
@@ -101,7 +112,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Server::builder()
         .add_service(service)
         .add_service(CalculatorServer::new(calculator))
-        .add_service(AdminServer::new(admin))
+        .add_service(AdminServer::with_interceptor(admin, check_auth))
         .serve(address)
         .await?;
 
