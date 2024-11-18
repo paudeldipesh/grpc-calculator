@@ -2,3 +2,4 @@ Command:
 1) grpcurl -plaintext -d '{"a": 2, "b": 9}' '[::1]:50051' calculator.Calculator.Add
 2) grpcurl -plaintext '[::1]:50051' list
 3) grpcui -plaintext '[::1]:50051'
+4) grpcurl -emit-defaults -plaintext '[::1]:50051' calculator.Admin.GetRequestCount

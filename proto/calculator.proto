@@ -12,4 +12,16 @@ message CalculationRequest {
   int64 b = 6;
 }
 
-message CalculationResponse { int64 result = 7; }
+message CalculationResponse {
+  int64 result = 7;
+}
+
+service Admin {
+  rpc GetRequestCount(GetCountRequest) returns (CounterResponse);
+}
+
+message GetCountRequest {}
+
+message CounterResponse {
+  uint64 count = 1;
+}
