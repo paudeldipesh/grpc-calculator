@@ -1,4 +1,4 @@
 Command:
-0) grpcurl -plaintext -d '{"a": 2, "b": 9}' [::1]:50051 calculator.Calculator.Add
-1) grpcurl -plaintext '[::1]:50051' list
-2) grpcui -plaintext '[::1]:50051'
+1) grpcurl -plaintext -d '{"a": 2, "b": 9}' '[::1]:50051' calculator.Calculator.Add
+2) grpcurl -plaintext '[::1]:50051' list
+3) grpcui -plaintext '[::1]:50051'
